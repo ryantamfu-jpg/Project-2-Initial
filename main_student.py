@@ -48,11 +48,17 @@ def main():
             # TODO: Prompt for course name, course code, and instructor name
             # Create a Course object and add it to manager via manager.add_course()
             # Print "Course added successfully."
-            pass
+            course_name = input("Enter course name: ").strip()
+            course_code = input("Enter course code: ").strip()
+            instructor_name = input("Enter instructor name: ").strip()
+            course = Course(course_name, course_code, instructor_name)
+            manager.add_course(course)
+            print("Course added successfully.")
 
         elif choice == "2":
             # TODO: Print each string returned by manager.display_courses()
-            pass
+            for string in manager.display_courses():
+                print(string)
 
         elif choice == "3":
             # TODO: Call prompt_course_code(manager) to get the course
@@ -60,7 +66,16 @@ def main():
             # Otherwise, prompt for item title, category, due date, and points possible
             # Create a CourseItem and add it to the course via course.add_item()
             # Print "Item added successfully."
-            pass
+            course = prompt_course_code(manager)
+            if course is None:
+                continue
+            item_title = input("Enter item title: ").strip()
+            item_category = input("Enter item category: ").strip()
+            item_due_date = input("Enter item due date: ").strip()
+            item_points_possible = float(input("Enter points possible: ").strip())
+            item = CourseItem(item_title, item_category, item_due_date, item_points_possible)
+            course.add_item(item)
+            print("Item added successfully.")
 
         elif choice == "4":
             # TODO: Call prompt_course_code(manager) to get the course
