@@ -220,7 +220,11 @@ class Course:
         # TODO: Loop through self.items, find the match, remove it, return True
         # If not found, return False
         for item in self.items: 
-            if item_title.lower() == item_title.lower():
+            if item.title.lower() == item_title.lower():
+                self.items.remove(item)
+                return True
+
+        return False  # only reached if nothing matched
                 
 
 
@@ -292,7 +296,34 @@ class Course:
             - Must not print anything.
         """
         # TODO: Implement the weighted grade algorithm described above
-        pass
+        
+        weighted_sum = 0
+        active_weight = 0
+    
+    # loop goes here
+    
+        for category, weight in self.weights.items():
+            graded = [item for item in self.items if item.category == category and item.points_earned is not None]
+        
+            if not graded:
+                continue
+        
+
+            category_pct = sum(item.points_earned for item in graded)/ sum(item.points_possible for item in graded)  * 100
+            weighted_sum = weighted_sum + category_pct * weight
+            active_weight = active_weight + weight
+        # now what?
+        # hint: use sum() on the graded list to get total points_earned and total points_possible
+        # category_pct = sum of points_earned / sum of points_possible * 100
+        # then add to weighted_sum and active_weight
+    
+        if active_weight == 0:
+            return None
+    
+        final_pct = weighted_sum / active_weight
+        return (round(final_pct, 2), score_to_letter(final_pct))
+
+
 
 
 class CourseManager:
@@ -304,7 +335,7 @@ class CourseManager:
             self.courses -- empty list (will hold Course objects)
         """
         # TODO: Set self.courses to an empty list
-        pass
+        self.courses = []
 
     def add_course(self, course):
         """
@@ -317,7 +348,7 @@ class CourseManager:
             - Must not print anything.
         """
         # TODO: Append course to self.courses
-        pass
+        self.courses.append(course)
 
     def find_course(self, course_name):
         """
